@@ -10,6 +10,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { ImagePlusIcon, LucideMessageCircleWarning } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { ToastAction } from "@/components/ui/toast";
+import axios from 'axios'
 
 export default function Component() {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -21,20 +22,14 @@ export default function Component() {
   };
 
   const handleUpload = () => {
-    console.log('oi', selectedImage)
-    alert('response')
     if (selectedImage) {
+      console.log('entrou if selected')
       const formData = new FormData();
       formData.append("image", selectedImage);
 
-      fetch("localhost:3001/upload", {
-        method: "POST",
-        body: formData,
-      })
+      axios.post("http://localhost:3001/upload", formData)
         .then((response) => {
-          //lógica
-          
-          console.log('res:', response)
+          console.log('rere: ', response)
           toast({
             title: "Sucesso!",
             description: "Sua imagem foi enviada",
@@ -63,7 +58,7 @@ export default function Component() {
           </div>
         </header>
         <main className="flex-1 flex flex-col items-center p-4">
-          <div className="max-w-sm w-full space-y-4 m-4">
+          <div className="max-w-md w-full space-y-4 m-4">
             <Alert variant="default" className="bg-amber-400">
               <div className="m-2">
                 <div className="flex flex-row">
@@ -73,8 +68,7 @@ export default function Component() {
                   <LucideMessageCircleWarning className="mx-1 w-4" />
                 </div>
                 <AlertDescription className="text-gray-800 mb-2">
-                  Não faça o envio de fotos desfocadas ou de resolução
-                  muito baixa, mantendo assim a performance na predição.
+                  Não faça o envio de fotos desfocadas ou de resolução muito baixa, mantendo assim a performance na predição.
                 </AlertDescription>
               </div>
             </Alert>
