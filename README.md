@@ -1,7 +1,12 @@
-## Getting Started
+# biosense
 
-First, run the development server:
+## Steps to run:
 
+Install the dependencies
+```bash
+pnpm install
+```
+Run the project
 ```bash
 pnpm dev
 ```
