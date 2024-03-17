@@ -58,8 +58,8 @@ export default function Component() {
         </div>
       )}
       {showCard && (
-        <div className="flex flex-col h-screen items-center pt-6">
-          <Card className={cn("w-[380px]")}>
+        <div className="flex flex-col h-screen items-center pt-6 px-5">
+          <Card className="w-full">
             <CardHeader>
               <CardTitle>Staphylococcus aureus</CardTitle>
             </CardHeader>
