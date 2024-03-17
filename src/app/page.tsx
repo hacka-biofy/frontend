@@ -1,19 +1,20 @@
 "use client";
 
+import Image from "next/image";
+import { useRouter } from 'next/navigation'
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { AvatarMenu } from "@/components/AvatarMenu";
-import logo from "../../public/logoverde.png";
-import Image from "next/image";
 import { Toaster } from "@/components/ui/toaster";
 import { useToast } from "@/components/ui/use-toast";
 import { ImagePlusIcon, LucideMessageCircleWarning } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { ToastAction } from "@/components/ui/toast";
 import axios from 'axios'
+import { Header } from "@/components/Header";
 
 export default function Component() {
   const [selectedImage, setSelectedImage] = useState(null);
+  const router = useRouter()
   const { toast } = useToast();
 
   const handleImageChange = (event) => {
@@ -33,6 +34,7 @@ export default function Component() {
           toast({
             title: "Sucesso!",
             description: "Sua imagem foi enviada",
+            duration: 500,
             action: (
               <ToastAction altText="Fechar notificação">Fechar</ToastAction>
             ),
@@ -40,6 +42,7 @@ export default function Component() {
 
           setTimeout(() => {
             setSelectedImage(null);
+            router.push('/success', { scroll: false })
           }, 2000);
         })
         .catch((error) => {
@@ -51,12 +54,7 @@ export default function Component() {
   return (
     <>
       <div className="h-screen flex flex-col">
-        <header className="bg-zinc-800 border-b p-4">
-          <div className="container mx-auto flex justify-center gap-4">
-            <Image alt={"logo"} src={logo} width={100} className="" />
-            <AvatarMenu />
-          </div>
-        </header>
+        <Header/>
         <main className="flex-1 flex flex-col items-center p-4">
           <div className="max-w-md w-full space-y-4 m-4">
             <Alert variant="default" className="bg-amber-400">
