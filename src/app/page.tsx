@@ -7,9 +7,7 @@ import logo from "../../public/logoverde.png";
 import Image from "next/image";
 import { Toaster } from "@/components/ui/toaster";
 import { useToast } from "@/components/ui/use-toast";
-
-import { LucideMessageCircleWarning } from "lucide-react";
-
+import { ImagePlusIcon, LucideMessageCircleWarning } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { ToastAction } from "@/components/ui/toast";
 
@@ -23,16 +21,20 @@ export default function Component() {
   };
 
   const handleUpload = () => {
+    console.log('oi', selectedImage)
+    alert('response')
     if (selectedImage) {
       const formData = new FormData();
       formData.append("image", selectedImage);
 
-      fetch("/upload", {
+      fetch("localhost:3001/upload", {
         method: "POST",
         body: formData,
       })
         .then((response) => {
           //lógica
+          
+          console.log('res:', response)
           toast({
             title: "Sucesso!",
             description: "Sua imagem foi enviada",
@@ -71,8 +73,8 @@ export default function Component() {
                   <LucideMessageCircleWarning className="mx-1 w-4" />
                 </div>
                 <AlertDescription className="text-gray-800 mb-2">
-                  Não faça o envio de fotos desfocadas ou de qualidade inferior
-                  à 360p, mantendo assim a performance na predição.
+                  Não faça o envio de fotos desfocadas ou de resolução
+                  muito baixa, mantendo assim a performance na predição.
                 </AlertDescription>
               </div>
             </Alert>
@@ -93,7 +95,7 @@ export default function Component() {
                   height={200}
                 />
               ) : (
-                <ImageIcon className="w-12 h-12" />
+                <ImagePlusIcon className="w-12 h-12" />
               )}
             </div>
             <div className="flex flex-col gap-2">
@@ -107,7 +109,7 @@ export default function Component() {
                   </Button>
                   <Button
                     className="w-full"
-                    variant="destructive"
+                    variant="outline"
                     onClick={() => {
                       setSelectedImage(null);
                     }}
@@ -139,26 +141,5 @@ export default function Component() {
       </div>
       <Toaster />
     </>
-  );
-}
-
-function ImageIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
-      <circle cx="9" cy="9" r="2" />
-      <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
-    </svg>
   );
 }
