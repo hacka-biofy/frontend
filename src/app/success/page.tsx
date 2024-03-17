@@ -59,7 +59,7 @@ export default function Component() {
       )}
       {showCard && (
         <div className="flex flex-col h-screen items-center pt-6 px-5">
-          <Card className="w-full">
+          <Card className="max-w-md">
             <CardHeader>
               <CardTitle>Staphylococcus aureus</CardTitle>
             </CardHeader>
