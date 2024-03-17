@@ -24,7 +24,7 @@ export function AvatarMenu() {
       <DropdownMenuContent className="w-56 mx-4">
         <div className="flex flex-col items-center p-4">
           
-          <DropdownMenuLabel className="select-none">Fulano</DropdownMenuLabel>
+          <DropdownMenuLabel className="select-none">Usuário</DropdownMenuLabel>
           <DropdownMenuLabel className="select-none text-gray-500 font-normal">
             biofy
           </DropdownMenuLabel>
