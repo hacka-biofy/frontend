@@ -4,9 +4,12 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import logo from "../../public/logoverde.png";
 import Image from "next/image";
+import { Toaster } from "@/components/ui/toaster";
+import { useToast } from "@/components/ui/use-toast"
 
 export default function Component() {
   const [selectedImage, setSelectedImage] = useState(null);
+  const { toast } = useToast()
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -17,13 +20,17 @@ export default function Component() {
     if (selectedImage) {
       const formData = new FormData();
       formData.append("image", selectedImage);
+      // notify('Imagem enviada!');
 
       fetch("/upload", {
         method: "POST",
         body: formData,
       })
         .then((response) => {
-          // Handle response
+          toast({
+            title: "Sucesso!",
+            description: "Sua imagem foi enviada",
+          })
         })
         .catch((error) => {
           console.error("Error uploading image:", error);
@@ -32,67 +39,79 @@ export default function Component() {
   };
 
   return (
-    <div className="h-screen flex flex-col">
-      <header className="bg-zinc-800 border-b p-4">
-        <div className="container mx-auto flex justify-center gap-4">
-          <Image alt={"logo"} src={logo} width={100} className="" />
-        </div>
-      </header>
-      <main className="flex-1 flex items-center justify-center p-4">
-        <div className="max-w-sm w-full space-y-4 m-12">
-          <div className="flex items-center justify-center border border-dashed border-gray-200 rounded-lg w-full h-60 relative">
-            <input
-              aria-label="Upload"
-              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-              type="file"
-              onChange={handleImageChange}
-            />
-            {selectedImage ? (
-              <img
-                src={URL.createObjectURL(selectedImage)}
-                alt="Selected"
-                className="object-cover w-full h-full rounded-lg"
-              />
-            ) : (
-              <ImageIcon className="w-12 h-12" />
-            )}
+    <>
+      <div className="h-screen flex flex-col">
+        <header className="bg-zinc-800 border-b p-4">
+          <div className="container mx-auto flex justify-center gap-4">
+            <Image alt={"logo"} src={logo} width={100} className="" />
           </div>
-          <div className="flex flex-col gap-2">
-            {selectedImage ? (
-              <>
-                <Button className="w-full bg-secondary" onClick={handleUpload}>
-                  Enviar
-                </Button>
-                <Button className="w-full" variant="destructive" onClick={() => { setSelectedImage(null) }}>
-                  Cancelar
-                </Button>
-              </>
-            ) : (
-              <>
-                <div>
-                  <input
-                    aria-label="Upload"
-                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                    type="file"
-                    onChange={handleImageChange}
-                  />
+        </header>
+        <main className="flex-1 flex items-center justify-center p-4">
+          <div className="max-w-sm w-full space-y-4 m-12">
+            <div className="flex items-center justify-center border border-dashed border-gray-200 rounded-lg w-full h-60 relative">
+              <input
+                aria-label="Upload"
+                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                type="file"
+                onChange={handleImageChange}
+              />
+              {selectedImage ? (
+                <img
+                  src={URL.createObjectURL(selectedImage)}
+                  alt="Selected"
+                  className="object-cover w-full h-full rounded-lg"
+                />
+              ) : (
+                <ImageIcon className="w-12 h-12" />
+              )}
+            </div>
+            <div className="flex flex-col gap-2">
+              {selectedImage ? (
+                <>
                   <Button
                     className="w-full bg-secondary"
-                    variant="outline"
-                    // onClick={handleImageChange}
+                    onClick={handleUpload}
                   >
-                    Escolher da Galeria
+                    Enviar
                   </Button>
-                </div>
-                <Button className="w-full" variant="outline">
-                  Tirar Foto
-                </Button>
-              </>
-            )}
+                  <Button
+                    className="w-full"
+                    variant="destructive"
+                    onClick={() => {
+                      setSelectedImage(null);
+                    }}
+                  >
+                    Cancelar
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <div>
+                    <input
+                      aria-label="Upload"
+                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                      type="file"
+                      onChange={handleImageChange}
+                    />
+                    <Button
+                      className="w-full bg-secondary"
+                      variant="outline"
+                      // onClick={handleImageChange}
+                    >
+                      Escolher da Galeria
+                    </Button>
+                  </div>
+                  <Button className="w-full" variant="outline">
+                    Tirar Foto
+                  </Button>
+                </>
+              )}
+            </div>
           </div>
-        </div>
-      </main>
-    </div>
+        </main>
+      </div>
+      <Toaster />
+    </>
   );
 }
 
