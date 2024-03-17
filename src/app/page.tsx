@@ -24,17 +24,15 @@ export default function Component() {
 
   const handleUpload = () => {
     if (selectedImage) {
-      console.log('entrou if selected')
       const formData = new FormData();
       formData.append("image", selectedImage);
 
       axios.post("http://localhost:3001/upload", formData)
         .then((response) => {
-          console.log('rere: ', response)
           toast({
             title: "Sucesso!",
             description: "Sua imagem foi enviada",
-            duration: 500,
+            duration: 800,
             action: (
               <ToastAction altText="Fechar notificação">Fechar</ToastAction>
             ),
@@ -71,7 +69,7 @@ export default function Component() {
               </div>
             </Alert>
 
-            <div className="flex items-center justify-center border border-dashed border-gray-200 rounded-lg w-full h-60 relative">
+            <div className="flex items-center justify-center border border-dashed border-gray-200 rounded-lg w-full h-52 relative">
               <input
                 aria-label="Upload"
                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"

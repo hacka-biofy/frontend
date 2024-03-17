@@ -11,7 +11,6 @@ import {
   PlusIcon,
 } from "@radix-ui/react-icons";
 
-import { cn } from "@/lib/utils";
 import {
   Card,
   CardContent,
@@ -58,8 +57,8 @@ export default function Component() {
         </div>
       )}
       {showCard && (
-        <div className="flex flex-col h-screen items-center pt-6">
-          <Card className={cn("w-[380px]")}>
+        <div className="flex flex-col h-screen items-center pt-6 px-5">
+          <Card className="max-w-md">
             <CardHeader>
               <CardTitle>Staphylococcus aureus</CardTitle>
             </CardHeader>
