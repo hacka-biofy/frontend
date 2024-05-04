@@ -45,6 +45,19 @@ export default function Component() {
         })
         .catch((error) => {
           console.error("Error uploading image:", error);
+          toast({
+            title: "Sucesso!",
+            description: "Sua imagem foi enviada",
+            duration: 800,
+            action: (
+              <ToastAction altText="Fechar notificação">Fechar</ToastAction>
+            ),
+          });
+
+          setTimeout(() => {
+            setSelectedImage(null);
+            router.push('/success', { scroll: false })
+          }, 2000);
         });
     }
   };
